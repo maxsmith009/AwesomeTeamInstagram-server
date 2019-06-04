@@ -1,6 +1,8 @@
 import {Sequelize} from 'sequelize-typescript';
 import { Posts } from './models/Posts';
 import { Op } from 'sequelize';
+import { Profiles } from './models/Profiles';
+import { Comments } from './models/Comments';
 
 require('dotenv').config();
 
@@ -14,4 +16,6 @@ export const sequelize = new Sequelize({
   models: [__dirname + '/models']
 });
 
+sequelize.addModels([Profiles]);
 sequelize.addModels([Posts]);
+sequelize.addModels([Comments]);

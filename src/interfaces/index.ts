@@ -9,6 +9,7 @@ export interface Profile {
   id: number;
   userName: string;
   password: string;
+  email: string;
   displayName: string;
   description: string;
   avatar: string;
