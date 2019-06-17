@@ -1,7 +1,7 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { Comment } from '../../interfaces';
-import { Profiles } from './Profiles';
-import { Posts } from './Posts';
+import { Comment } from '../interfaces';
+import { Profile } from './profile.entity';
+import { Post } from './post.entity';
 
 @Table({
   timestamps: false,
@@ -16,18 +16,18 @@ export class Comments extends Model<Comment> {
   @Column
   public text!: string;
 
-  @ForeignKey(() => Profiles)
+  @ForeignKey(() => Profile)
   @Column
   profileId: number;
 
-  @BelongsTo(() => Profiles)
-  profile: Profiles;
+  @BelongsTo(() => Profile)
+  profile: Profile;
 
-  @ForeignKey(() => Posts)
+  @ForeignKey(() => Post)
   @Column
   postId: number;
 
-  @BelongsTo(() => Posts)
-  post: Posts;
+  @BelongsTo(() => Post)
+  post: Post;
 
 }

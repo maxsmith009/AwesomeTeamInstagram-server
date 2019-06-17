@@ -1,13 +1,11 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
-import { Post } from '../../interfaces';
-import { Profiles } from './Profiles';
+import { Profile } from './profile.entity';
 import { Comments } from './Comments';
-
 
 @Table({
   timestamps: false,
 })
-export class Posts extends Model<Post> {
+export class Post extends Model<Post> {
 
   @PrimaryKey
   @AutoIncrement
@@ -17,12 +15,12 @@ export class Posts extends Model<Post> {
   @Column
   public imageUrl!: string;
 
-  @ForeignKey(() => Profiles)
+  @ForeignKey(() => Profile)
   @Column
   profileId: number;
 
-  @BelongsTo(() => Profiles)
-  profile: Profiles;
+  @BelongsTo(() => Profile)
+  profile: Profile;
 
   @HasMany(() => Comments)
   comments: Comments[];

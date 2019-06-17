@@ -1,9 +1,8 @@
-export interface Post {
+export interface IPost {
   id: number;
   profileId: number;
   imageUrl: string;
 }
-
 
 export interface Profile {
   id: number;
