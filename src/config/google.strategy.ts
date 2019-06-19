@@ -13,29 +13,20 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/auth/google/callback',
       passReqToCallback: true,
-      scope: ['profile']
+      scope: ['profile'],
     });
   }
 
-  async validate(request: any, accessToken: string, refreshToken: string, profile, done: Function)
-  {
-    try
-    {
+  async validate(request: any, accessToken: string, refreshToken: string, profile, done: Function) {
+    try {
       console.log(profile);
 
       const jwt: string = await this.authService.validateOAuthLogin(profile.id, Provider.GOOGLE);
-      const user =
-        {
-          jwt
-        };
-
+      const user = { jwt };
       done(null, user);
-    }
-    catch(err)
-    {
+    } catch (err) {
       // console.log(err)
       done(err, false);
     }
   }
-
 }

@@ -1,13 +1,11 @@
 import { AutoIncrement, Column, HasMany, Model, PrimaryKey, Table } from 'sequelize-typescript';
-import { Profile } from '../../interfaces';
-import { Posts } from './Posts';
+import { Post } from './post.entity';
 import { Comments } from './Comments';
-
 
 @Table({
   timestamps: false,
 })
-export class Profiles extends Model<Profile> {
+export class Profile extends Model<Profile> {
 
   @PrimaryKey
   @AutoIncrement
@@ -32,11 +30,10 @@ export class Profiles extends Model<Profile> {
   @Column
   public avatar!: string;
 
-  @HasMany(() => Posts)
-  posts: Posts[];
+  @HasMany(() => Post)
+  posts: Post[];
 
   @HasMany(() => Comments)
   comments: Comments[];
 
 }
-
