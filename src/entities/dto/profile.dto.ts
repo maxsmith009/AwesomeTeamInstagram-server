@@ -1,4 +1,4 @@
-export class CreatePrifileDto {
+export class ProfileDto {
   readonly userName: string;
   readonly password: string;
   readonly email: string;

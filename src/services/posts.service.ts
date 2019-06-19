@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Post } from '../entities/post.entity';
-import { CreatePostDto } from '../entities/dto/create-post.dto';
+import { PostDto } from '../entities/dto/post.dto';
 
 @Injectable()
 export class PostsService {
@@ -12,11 +12,31 @@ export class PostsService {
     return await this.POST_REPOSITORY.findAll<Post>();
   }
 
-  async createPost(createPostDto: CreatePostDto): Promise<Post> {
+  async getPostById(postId: number): Promise<Post> {
+    return await this.POST_REPOSITORY.findByPk(postId);
+  }
+
+  async createPost(postDto: PostDto): Promise<Post> {
     const newPost = new Post();
-    newPost.imageUrl = createPostDto.imageUrl;
-    newPost.profileId = createPostDto.profileId;
+    newPost.imageUrl = postDto.imageUrl;
+    newPost.profileId = postDto.profileId;
     return await newPost.save();
+  }
+
+  async updatePost(postId: number, postDto: PostDto): Promise<Post> {
+    return await this.POST_REPOSITORY.update(postDto, {
+      where: {
+        id: postId,
+      },
+    });
+  }
+
+  async deletePost(postId: number) {
+    return this.POST_REPOSITORY.destroy({
+      where: {
+        id: postId,
+      },
+    });
   }
 
 }

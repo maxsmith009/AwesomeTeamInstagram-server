@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Profile } from '../entities/profile.entity';
-import { CreatePrifileDto } from '../entities/dto/create-prifile.dto';
+import { ProfileDto } from '../entities/dto/profile.dto';
 
 @Injectable()
 export class ProfileService {
@@ -12,15 +12,35 @@ export class ProfileService {
     return await this.PROFILE_REPOSITORY.findAll();
   }
 
-  async createProfile(createProfileDto: CreatePrifileDto): Promise<Profile> {
+  async getProfileById(profileId: number): Promise<Profile> {
+    return await this.PROFILE_REPOSITORY.findByPk(profileId);
+  }
+
+  async createProfile(profileDto: ProfileDto): Promise<Profile> {
     const newProfile = new Profile();
-    newProfile.userName = createProfileDto.userName;
-    newProfile.displayName = createProfileDto.displayName;
-    newProfile.description = createProfileDto.description;
-    newProfile.email = createProfileDto.email;
-    newProfile.password = createProfileDto.password;
-    newProfile.avatar = createProfileDto.avatar;
+    newProfile.userName = profileDto.userName;
+    newProfile.displayName = profileDto.displayName;
+    newProfile.description = profileDto.description;
+    newProfile.email = profileDto.email;
+    newProfile.password = profileDto.password;
+    newProfile.avatar = profileDto.avatar;
 
     return await newProfile.save();
+  }
+
+  async updateProfile(profileId: number, profileDto: ProfileDto): Promise<Profile> {
+    return await this.PROFILE_REPOSITORY.update(profileDto, {
+      where: {
+        id: profileId,
+      },
+    });
+  }
+
+  async deleteProfile(profileId): Promise<Profile> {
+    return await this.PROFILE_REPOSITORY.destroy({
+      where: {
+        id: profileId,
+      },
+    });
   }
 }
