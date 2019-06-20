@@ -1,12 +1,11 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { Comment } from '../interfaces';
 import { Profile } from './profile.entity';
 import { Post } from './post.entity';
 
 @Table({
   timestamps: false,
 })
-export class Comments extends Model<Comment> {
+export class Comment extends Model<Comment> {
 
   @PrimaryKey
   @AutoIncrement

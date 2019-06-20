@@ -1,6 +1,6 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import { Profile } from './profile.entity';
-import { Comments } from './Comments';
+import { Comment } from './comment.entity';
 
 @Table({
   timestamps: false,
@@ -22,7 +22,7 @@ export class Post extends Model<Post> {
   @BelongsTo(() => Profile)
   profile: Profile;
 
-  @HasMany(() => Comments)
-  comments: Comments[];
+  @HasMany(() => Comment)
+  comments: Comment[];
 
 }

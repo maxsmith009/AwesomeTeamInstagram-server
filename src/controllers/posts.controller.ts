@@ -1,34 +1,54 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import {PostsService} from '../services/posts.service';
 import { PostDto } from '../entities/dto/post.dto';
+import { CommentsService } from '../services/comments.service';
+import { CommentDto } from '../entities/dto/comment.dto';
 
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly commentsService: CommentsService,
+  ) {}
 
   @Get()
   async getAllPosts() {
     return await this.postsService.getAllPosts();
   }
 
-  @Get(':id')
-  async getPostById(@Param('id')id: number) {
-    return await this.postsService.getPostById(id);
+  @Get(':postId')
+  async getPostById(@Param('postId')postId: number) {
+    return await this.postsService.getPostById(postId);
   }
 
   @Post()
   async createPost(@Body()postDto: PostDto) {
-    await this.postsService.createPost(postDto);
+    return await this.postsService.createPost(postDto);
   }
 
-  @Put(':id')
-  async updatePost(@Param('id')id: number, @Body()postDto: PostDto) {
-    await this.postsService.updatePost(id, postDto);
+  @Put(':postId')
+  async updatePost(@Param('postId')postId: number, @Body()postDto: PostDto) {
+    return await this.postsService.updatePost(postId, postDto);
   }
 
-  @Delete(':id')
-  async deletePost(@Param('id')id: number) {
-    await this.postsService.deletePost(id);
+  @Delete(':postId')
+  async deletePost(@Param('postId')postId: number) {
+    await this.commentsService.deleteCommentsOfPost(postId)
+      .then(() => this.postsService.deletePost(postId));
   }
 
+  @Get(':postId/comments')
+  async getCommentsByPostId(@Param('postId')postId: number) {
+    return await this.commentsService.getCommentsByPostId(postId);
+  }
+
+  @Post(':postId/comments')
+  async createComment(@Param('postId')postId: number, @Body()commentDto: CommentDto) {
+    return await this.commentsService.createComment(postId, commentDto);
+  }
+
+  @Delete('comments/:commentId')
+  async deleteComment(@Param('commentId')commentId: number) {
+    await this.commentsService.deleteComment(commentId);
+  }
 }

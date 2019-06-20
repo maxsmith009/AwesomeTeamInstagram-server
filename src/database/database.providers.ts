@@ -2,7 +2,7 @@ import {Sequelize} from 'sequelize-typescript';
 import { Post } from '../entities/post.entity';
 import { Op } from 'sequelize';
 import { Profile } from '../entities/profile.entity';
-import { Comments } from '../entities/Comments';
+import { Comment } from '../entities/comment.entity';
 
 require('dotenv').config();
 
@@ -19,7 +19,7 @@ export const databaseProviders = [
         storage: ':memory:',
         models: [__dirname + '/entities'],
       });
-      sequelize.addModels([Profile, Post, Comments]);
+      sequelize.addModels([Profile, Post, Comment]);
       await sequelize.sync();
       return sequelize;
     },

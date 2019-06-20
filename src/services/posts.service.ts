@@ -32,9 +32,17 @@ export class PostsService {
   }
 
   async deletePost(postId: number) {
-    return this.POST_REPOSITORY.destroy({
+    return await this.POST_REPOSITORY.destroy({
       where: {
         id: postId,
+      },
+    });
+  }
+
+  async getPostsByProfileId(idOfProfile: number): Promise<Post[]> {
+    return await this.POST_REPOSITORY.findAll({
+      where: {
+        profileId: idOfProfile,
       },
     });
   }

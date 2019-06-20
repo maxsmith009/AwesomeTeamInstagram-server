@@ -1,6 +1,6 @@
 import { AutoIncrement, Column, HasMany, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import { Post } from './post.entity';
-import { Comments } from './Comments';
+import { Comment } from './comment.entity';
 
 @Table({
   timestamps: false,
@@ -33,7 +33,7 @@ export class Profile extends Model<Profile> {
   @HasMany(() => Post)
   posts: Post[];
 
-  @HasMany(() => Comments)
-  comments: Comments[];
+  @HasMany(() => Comment)
+  comments: Comment[];
 
 }
